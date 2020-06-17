@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+        //trying
 
 
         recycler_view.adapter = ExampleAdapter(exampleList,this)
