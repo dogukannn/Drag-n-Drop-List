@@ -1,5 +1,8 @@
 package com.example.drag_drop_list
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.LayoutDirection
 import android.view.ViewGroup
@@ -117,6 +120,12 @@ class MainActivity : AppCompatActivity() {
 
         }
         return list
+    }
+
+    fun toActiv2(view:android.view.View){
+        val intent = Intent(this,Activity2::class.java)
+        startActivity(intent)
+
     }
 
 
