@@ -19,7 +19,9 @@ import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     val exampleList = generateDummyList(5)
-    var exampleListTrue = ArrayList<ExampleItem>(exampleList)
+    var exampleListTrue = ArrayList<ExampleItem>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +29,17 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
         //trying
-        var tmp = exampleListTrue[0]
-        exampleListTrue[0] = exampleListTrue[3]
-        exampleListTrue[3] = tmp
+        exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Nato kuruldu.", "1949"))
+        exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Varşova Paktı kuruldu.", "1955"))
+        exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı.", "1974"))
+        exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı.", "1989"))
+        exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı.", "1991"))
+
+        Collections.shuffle(exampleList)
+
+        //var tmp = exampleListTrue[0]
+        //exampleListTrue[0] = exampleListTrue[3]
+        //exampleListTrue[3] = tmp
 
 
         recycler_view.adapter = ExampleAdapter(exampleList,this)
@@ -124,17 +134,13 @@ class MainActivity : AppCompatActivity() {
     private  fun generateDummyList(size: Int): List<ExampleItem> {
         val list = ArrayList<ExampleItem>()
 
-        for(i in 0 until size){
-            val drawable = when (i%3){
-                0 -> R.drawable.ic_android
-                1 -> R.drawable.ic_android
-                else -> R.drawable.ic_android
-            }
+        //val item = ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkılışı.", "1989")
+        list += ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı.", "1989")
+        list += ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı.", "1974")
+        list += ExampleItem(R.drawable.ic_android, "Nato kuruldu.", "1949")
+        list += ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı.", "1991")
+        list += ExampleItem(R.drawable.ic_android, "Varşova Paktı kuruldu.", "1955")
 
-            val item = ExampleItem(drawable, "Item $i", "Ahmet Necdet Sezer")
-            list += item
-
-        }
         return list
     }
 
