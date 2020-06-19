@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.LayoutDirection
+import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     val exampleList = generateDummyList(5)
+    var exampleListTrue = ArrayList<ExampleItem>(exampleList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
         //trying
+        var tmp = exampleListTrue[0]
+        exampleListTrue[0] = exampleListTrue[3]
+        exampleListTrue[3] = tmp
 
 
         recycler_view.adapter = ExampleAdapter(exampleList,this)
@@ -96,6 +101,17 @@ class MainActivity : AppCompatActivity() {
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             TODO("Not yet implemented")
+        }
+
+        override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+            super.clearView(recyclerView, viewHolder)
+            //Log.w("drag is ended","ups")
+            if(exampleList == exampleListTrue)
+            {
+                val intent = Intent(recyclerView.context,Activity2::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
     val itemTouchHelper = ItemTouchHelper(simpleCallback)

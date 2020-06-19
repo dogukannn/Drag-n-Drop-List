@@ -12,9 +12,10 @@
         android:layout_height="217dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="140dp"
-        android:text="Hello to the second activity of year 2020."
+        android:text="You won everything."
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textColor="#FF9800"
+        android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
