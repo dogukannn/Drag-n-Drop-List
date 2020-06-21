@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.example_item.view.*
 
-class ExampleAdapter(private val exampleList : List<ExampleItem>, private  var activity: MainActivity) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
+class ExampleAdapter(private val exampleList : List<ExampleItem>, private  var activity: ExampleLevel) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
 
     var mRecyclerView: RecyclerView? = null
 
