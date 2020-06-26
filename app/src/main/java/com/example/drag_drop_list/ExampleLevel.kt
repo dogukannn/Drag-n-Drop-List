@@ -20,7 +20,7 @@ class ExampleLevel() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example_level)
         supportActionBar?.hide()
-        //gpa sign try1
+        //gpa sign try2
         var bundle = this.intent.extras
         exampleList= intent.getSerializableExtra("value") as ArrayList<ExampleItem>
 
