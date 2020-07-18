@@ -1,22 +1,16 @@
 package com.example.drag_drop_list
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.LayoutDirection
 import android.util.Log
-import android.view.ViewGroup
+import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.Serializable
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     var exampleListTrue = ArrayList<ExampleItem>()
@@ -34,12 +28,28 @@ class MainActivity : AppCompatActivity() {
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı.", "1974"))
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı.", "1989"))
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı.", "1991"))
+        val i=1
+        val jsonFileString = getJsonDataFromAsset(applicationContext, "Kitap$i.json")
+
+        /*val jObject = JSONArray(jsonFileString)
+
+        Log.i("data",ar1.toString())*/
+
+        Log.w("data", jsonFileString)
+
+        val gson = Gson()
+        val listPersonType = object : TypeToken<List<Item>>() {}.type
+
+        var items: List<Item> = gson.fromJson(jsonFileString, listPersonType)
+        items.forEachIndexed { idx, item -> Log.i("data", "> Item $idx:\n$item") }
+
+
 
         }
 
 
 
-    fun toActiv2(view:android.view.View){
+    fun toActiv2(view: View){
         val intent = Intent(this,ExampleLevel::class.java)
 
         var bundle = Bundle();
