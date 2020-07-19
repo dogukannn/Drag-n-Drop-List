@@ -28,6 +28,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="23dp"
+        android:background="@drawable/ripple"
+        android:backgroundTint="#69DFD3"
         android:onClick="toActiv2"
         android:text="Button" />
 

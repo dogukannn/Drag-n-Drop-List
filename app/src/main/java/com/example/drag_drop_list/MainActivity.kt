@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.marcinmoskala.math.combinations
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
@@ -28,13 +29,16 @@ class MainActivity : AppCompatActivity() {
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı.", "1974"))
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı.", "1989"))
         exampleListTrue.add(ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı.", "1991"))
+        //var a = exampleListTrue[0].text2.toInt() < exampleListTrue[1].text2.toInt()
+        //Log.i("data","a = $a")
+
         val i=1
         val jsonFileString = getJsonDataFromAsset(applicationContext, "Kitap$i.json")
 
         /*val jObject = JSONArray(jsonFileString)
 
         Log.i("data",ar1.toString())*/
-
+        //Log.i("comb",(1..100).toSet().combinations(5).toString())
         Log.w("data", jsonFileString)
 
         val gson = Gson()
@@ -51,12 +55,13 @@ class MainActivity : AppCompatActivity() {
 
     fun toActiv2(view: View){
         val intent = Intent(this,ExampleLevel::class.java)
+        val intent2 = Intent(this,Categories::class.java)
 
         var bundle = Bundle();
         bundle.putSerializable("value", exampleListTrue as Serializable);
         intent.putExtras(bundle);
 
-        startActivity(intent)
+        startActivity(intent2)
 
     }
 

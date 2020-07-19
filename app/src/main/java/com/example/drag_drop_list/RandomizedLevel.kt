@@ -3,35 +3,51 @@ package com.example.drag_drop_list
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.LayoutDirection
-import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.roundToInt
 
-class ExampleLevel() : AppCompatActivity() {
+class RandomizedLevel : AppCompatActivity() {
+    var count = 0
+    var l = 0
+    var allItems = ArrayList<ExampleItem>()
     var exampleList = ArrayList<ExampleItem>()
     var exampleListOrdered = ArrayList<ExampleItem>()
-    val a = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example_level)
+        setContentView(R.layout.activity_randomized_level)
         supportActionBar?.hide()
         //gpg sign try5
         var bundle = this.intent.extras
-        exampleList= intent.getSerializableExtra("value") as ArrayList<ExampleItem>
+        allItems= intent.getSerializableExtra("value") as ArrayList<ExampleItem>
 
-        exampleListOrdered.addAll(exampleList)
+        /*exampleListOrdered.addAll(exampleList)
         while (exampleListOrdered == exampleList) {
             exampleList.shuffle()
+        }*/
+        allItems.shuffle()
+        count = allItems.size
+
+        exampleList.add(allItems[l])
+        exampleList.add(allItems[l+1])
+        exampleList.add(allItems[l+2])
+        var a = (0..(count-1)).random()
+        while((a == l) || (a == (l+1)) || (a == (l+2))){
+            a = (0..(count-1)).random()
         }
+        var b = (0..(count-1)).random()
+        while((b == l) || (b == (l+1)) || (b == (l+2)) || (b == a)){
+            b = (0..(count-1)).random()
+        }
+        exampleList.add(allItems[a])
+        exampleList.add(allItems[b])
+        l = 3
 
 
-        recycler_view.adapter = ExampleAdapter(exampleList,this)
+        recycler_view.adapter = RandomizedLevelAdapter(exampleList,this)
         recycler_view.layoutManager = ExLayout(this)
         recycler_view.setHasFixedSize(true)
         itemTouchHelper.attachToRecyclerView(recycler_view)
@@ -81,10 +97,4 @@ class ExampleLevel() : AppCompatActivity() {
     fun startDragging(viewHolder: RecyclerView.ViewHolder) {
         itemTouchHelper.startDrag(viewHolder)
     }
-
-    fun toActiv2(view:android.view.View){
-        val intent = Intent(this,Activity2::class.java)
-        startActivity(intent)
-    }
-
 }
