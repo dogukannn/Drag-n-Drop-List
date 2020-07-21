@@ -3,6 +3,7 @@ package com.example.drag_drop_list
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,6 +16,7 @@ class RandomizedLevel : AppCompatActivity() {
     var allItems = ArrayList<ExampleItem>()
     var exampleList = ArrayList<ExampleItem>()
     var exampleListOrdered = ArrayList<ExampleItem>()
+    val act = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,21 +82,45 @@ class RandomizedLevel : AppCompatActivity() {
         override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
             super.clearView(recyclerView, viewHolder)
             //Log.w("drag is ended","ups")
-            if(exampleList == exampleListOrdered)
-            {
 
-                /*exampleList.shuffle()
-                recycler_view.adapter = ExampleAdapter(exampleList,a)
-                */
-                val intent = Intent(recyclerView.context,Activity2::class.java)
-                startActivity(intent)
-                finish()
-            }
+
         }
     }
     val itemTouchHelper = ItemTouchHelper(simpleCallback)
 
     fun startDragging(viewHolder: RecyclerView.ViewHolder) {
         itemTouchHelper.startDrag(viewHolder)
+    }
+    fun checkLevel(v: View){
+        var x1 = exampleList[0].text2.toInt() < exampleList[1].text2.toInt()
+        var x2 = exampleList[1].text2.toInt() < exampleList[2].text2.toInt()
+        var x3 = exampleList[2].text2.toInt() < exampleList[3].text2.toInt()
+        var x4 = exampleList[3].text2.toInt() < exampleList[4].text2.toInt()
+        if(x1 && x2 && x3 && x4)
+        {
+
+            exampleList.clear()
+            exampleList.add(allItems[l])
+            exampleList.add(allItems[l+1])
+            exampleList.add(allItems[l+2])
+            var a = (0..(count-1)).random()
+            while((a == l) || (a == (l+1)) || (a == (l+2))){
+                a = (0..(count-1)).random()
+            }
+            var b = (0..(count-1)).random()
+            while((b == l) || (b == (l+1)) || (b == (l+2)) || (b == a)){
+                b = (0..(count-1)).random()
+            }
+            exampleList.add(allItems[a])
+            exampleList.add(allItems[b])
+            l += 3
+
+            recycler_view.adapter = RandomizedLevelAdapter(exampleList,act)
+
+            /*val intent = Intent(recyclerView.context,Activity2::class.java)
+            startActivity(intent)
+            finish()*/
+        }
+
     }
 }
