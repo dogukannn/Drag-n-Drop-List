@@ -40,12 +40,12 @@
         android:layout_width="205dp"
         android:layout_height="75dp"
         android:background="@drawable/squaree"
-        android:text="Button"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="HINT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button7"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:foreground="?android:attr/selectableItemBackground" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

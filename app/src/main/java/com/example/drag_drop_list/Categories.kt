@@ -16,6 +16,8 @@ class Categories : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
 
+        //todo mastery system for categories
+
 
         //(1..200).toSet().combinations(3) :: TOO HEAVY TO USE
         list0.add(ExampleItem(R.drawable.ic_android, "Nato kuruldu.", "1949"))
@@ -36,6 +38,7 @@ class Categories : AppCompatActivity() {
     }
 
     fun toLevel(v:View) {
+        //todo send datas to randomized levels
         when(v.tag){
             0 -> {
                 categoryItems = list0

@@ -1,12 +1,15 @@
 package com.example.drag_drop_list
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.example_item.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -76,7 +79,7 @@ class RandomizedLevel : AppCompatActivity() {
             return false
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            TODO("Not yet implemented")
+            TODO("If I wanted to swipe...")
         }
 
         override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
@@ -96,8 +99,14 @@ class RandomizedLevel : AppCompatActivity() {
         var x2 = exampleList[1].text2.toInt() < exampleList[2].text2.toInt()
         var x3 = exampleList[2].text2.toInt() < exampleList[3].text2.toInt()
         var x4 = exampleList[3].text2.toInt() < exampleList[4].text2.toInt()
+
         if(x1 && x2 && x3 && x4)
         {
+
+            for(x in 0..4) {
+                recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(119,235,30))
+            }
+
 
             exampleList.clear()
             exampleList.add(allItems[l])
@@ -116,10 +125,38 @@ class RandomizedLevel : AppCompatActivity() {
             l += 3
 
             recycler_view.adapter = RandomizedLevelAdapter(exampleList,act)
-
+            //todo -add the finisher for the kinda loop it will give segfault after the item count in allitems
             /*val intent = Intent(recyclerView.context,Activity2::class.java)
             startActivity(intent)
             finish()*/
+        }
+        else {
+            exampleListOrdered.add(exampleList[0])
+            exampleListOrdered.add(exampleList[1])
+            exampleListOrdered.add(exampleList[2])
+            exampleListOrdered.add(exampleList[3])
+            exampleListOrdered.add(exampleList[4])
+            exampleListOrdered.sortBy { it.text2 }
+            /*Log.w("data","in hereee, $exampleListOrdered")
+            val bol1 = exampleList[0] == exampleListOrdered[0]
+            Log.w("data","in hereee, $bol1")
+            recycler_view.layoutManager?.findViewByPosition(0)?.setBackgroundColor(Color.rgb(240,98,22))
+            recycler_view.layoutManager?.findViewByPosition(1)?.setBackgroundColor(Color.rgb(119,235,30))*/
+
+            for(x in 0..4) {
+                if(exampleList[x] == exampleListOrdered[x]){
+                    recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(119,235,30))
+
+                }
+                else {
+                    recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(240,98,22))
+                }
+            }
+
+
+            exampleListOrdered.clear()
+
+            //todo -show false items with red gradient else in green
         }
 
     }
