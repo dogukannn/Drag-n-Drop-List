@@ -8,20 +8,37 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="408dp"
-        android:layout_height="497dp"
-        app:layout_constraintBottom_toTopOf="@+id/button8"
+        android:layout_width="411dp"
+        android:layout_height="578dp"
+        android:layout_marginTop="37dp"
+        app:layout_constraintBottom_toTopOf="@+id/button12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:listitem="@layout/example_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/button12"
+        android:layout_width="205dp"
+        android:layout_height="75dp"
+        android:background="@drawable/squaree"
+        android:backgroundTint="#46DCB9"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="goNextLevel"
+        android:text="NEXT LEVEL"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/button6"
         android:layout_width="205dp"
         android:layout_height="75dp"
         android:background="@drawable/squaree"
@@ -30,21 +47,48 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="checkLevel"
         android:text="CONFIRM"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/button11"
         android:layout_width="205dp"
         android:layout_height="75dp"
         android:background="@drawable/squaree"
+        android:backgroundTint="#ECB64C"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="MASTERY  0%"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="205dp"
+        android:layout_height="75dp"
+        android:background="@drawable/squaree"
+        android:backgroundTint="#3EE1D9"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="HINT"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button7"
+        app:layout_constraintEnd_toStartOf="@+id/button12"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="121dp"
+        android:layout_height="44dp"
+        android:text="TextView"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
