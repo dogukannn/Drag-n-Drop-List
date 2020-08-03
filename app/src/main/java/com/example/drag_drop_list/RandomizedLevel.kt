@@ -18,6 +18,7 @@ import kotlin.collections.ArrayList
 
 class RandomizedLevel : AppCompatActivity() {
     var count = 0
+    var countAll = 0
     var l = 0
     var allItems = ArrayList<ExampleItem>()
     var exampleList = ArrayList<ExampleItem>()
@@ -36,6 +37,7 @@ class RandomizedLevel : AppCompatActivity() {
         //gpg sign try5
         var bundle = this.intent.extras
         allItems= intent.getSerializableExtra("value") as ArrayList<ExampleItem>
+        count = intent.getSerializableExtra("count") as Int
 
         /*exampleListOrdered.addAll(exampleList)
         while (exampleListOrdered == exampleList) {
@@ -48,26 +50,42 @@ class RandomizedLevel : AppCompatActivity() {
 
 
         allItems.shuffle()
-        count = allItems.size
+        countAll = allItems.size
 
-        exampleList.add(allItems[l])
+
+        for (x in 1..((count+1)/2) )
+        {
+            exampleList.add(allItems[l])
+            l += 1
+        }
+        for (x in 1..(count - ((count+1)/2)))
+        {
+            var a = (0 until countAll).random()
+            while(a < l  && a >= (l - ((count+1)/2))){
+                a = (0..(countAll-1)).random()
+            }
+            Log.w("warning","a = $a, l = $l")
+            exampleList.add(allItems[a])
+        }
+
+        /*exampleList.add(allItems[l])
         exampleList.add(allItems[l+1])
         exampleList.add(allItems[l+2])
-        var a = (0..(count-1)).random()
+        var a = (0..(countAll-1)).random()
         while((a == l) || (a == (l+1)) || (a == (l+2))){
-            a = (0..(count-1)).random()
+            a = (0..(countAll-1)).random()
         }
-        var b = (0..(count-1)).random()
+        var b = (0..(countAll-1)).random()
         while((b == l) || (b == (l+1)) || (b == (l+2)) || (b == a)){
-            b = (0..(count-1)).random()
+            b = (0..(countAll-1)).random()
         }
         exampleList.add(allItems[a])
         exampleList.add(allItems[b])
-        l = 3
+        l = 3*/
 
 
         recycler_view.adapter = RandomizedLevelAdapter(exampleList,this)
-        recycler_view.layoutManager = ExLayout(this)
+        recycler_view.layoutManager = ExLayout(this,count)
         recycler_view.setHasFixedSize(true)
         itemTouchHelper.attachToRecyclerView(recycler_view)
     }
@@ -109,13 +127,30 @@ class RandomizedLevel : AppCompatActivity() {
         itemTouchHelper.startDrag(viewHolder)
     }
     fun checkLevel(v: View){
-        var x1 = exampleList[0].text2.toInt() < exampleList[1].text2.toInt()
+        /*var x1 = exampleList[0].text2.toInt() < exampleList[1].text2.toInt()
         var x2 = exampleList[1].text2.toInt() < exampleList[2].text2.toInt()
         var x3 = exampleList[2].text2.toInt() < exampleList[3].text2.toInt()
-        var x4 = exampleList[3].text2.toInt() < exampleList[4].text2.toInt()
+        var x4 = exampleList[3].text2.toInt() < exampleList[4].text2.toInt()*/
 
-        if(x1 && x2 && x3 && x4)
+        var order = true
+
+        for(x in 0..(count-2))
         {
+            if (exampleList[x].text2.toInt() < exampleList[x+1].text2.toInt())
+            {
+                continue
+            }
+            else
+            {
+                order = false
+            }
+        }
+
+        if(order)
+        {
+            val intnt = Intent()
+            intnt.putExtra("mst0",2)
+            setResult(25,intnt)
 
             for(x in 0..4) {
                 recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(119,235,30))
@@ -127,14 +162,12 @@ class RandomizedLevel : AppCompatActivity() {
 
         }
         else {
-            exampleListOrdered.add(exampleList[0])
-            exampleListOrdered.add(exampleList[1])
-            exampleListOrdered.add(exampleList[2])
-            exampleListOrdered.add(exampleList[3])
-            exampleListOrdered.add(exampleList[4])
+            for(x in 0..(count-1)){
+                exampleListOrdered.add(exampleList[x])
+            }
             exampleListOrdered.sortBy { it.text2 }
 
-            for(x in 0..4) {
+            for(x in 0..(count-1)) {
                 if(exampleList[x] == exampleListOrdered[x]){
                     recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(119,235,30))
 
@@ -156,13 +189,28 @@ class RandomizedLevel : AppCompatActivity() {
 
     fun goNextLevel(v: View) {
 
-        if(l + 2 > (count-1)) //checking if we have any items to show
+        if(l + 2 > (countAll-1)) //checking if we have any items to show
         {
             return
         }
 
         exampleList.clear()
-        exampleList.add(allItems[l])
+        for (x in 1..((count+1)/2) )
+        {
+            exampleList.add(allItems[l])
+            l += 1
+        }
+        for (x in 1..(count - ((count+1)/2)))
+        {
+            var a = (0 until countAll).random()
+            while(a < l  && a >= (l - ((count+1)/2))){
+                a = (0..(countAll-1)).random()
+            }
+            Log.w("warning","a = $a, l = $l")
+            exampleList.add(allItems[a])
+        }
+
+        /*exampleList.add(allItems[l])
         exampleList.add(allItems[l+1])
         exampleList.add(allItems[l+2])
         var a = (0..(count-1)).random()
@@ -175,7 +223,7 @@ class RandomizedLevel : AppCompatActivity() {
         }
         exampleList.add(allItems[a])
         exampleList.add(allItems[b])
-        l += 3
+        l += 3*/
 
         recycler_view.adapter = RandomizedLevelAdapter(exampleList,act)
         buttonMast?.visibility = View.INVISIBLE

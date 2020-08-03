@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 
-class ExLayout(private val context: Context) : LinearLayoutManager(context) {
+class ExLayout(private val context: Context,private val count:Int) : LinearLayoutManager(context) {
     override fun canScrollVertically(): Boolean {
         return false
     }
@@ -39,7 +39,7 @@ class ExLayout(private val context: Context) : LinearLayoutManager(context) {
     private fun getItemSize(): Int {
         val pageSize = height
 
-        return (pageSize.toFloat() / 5).roundToInt()
+        return (pageSize.toFloat() / count).roundToInt()
     }
 
 }
