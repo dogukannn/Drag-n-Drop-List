@@ -1,20 +1,22 @@
 package com.example.drag_drop_list
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.recycler_view
 import kotlinx.android.synthetic.main.activity_randomized_level.*
-import kotlinx.android.synthetic.main.example_item.*
 import java.util.*
 import kotlin.collections.ArrayList
+
+
 //todo clean the code
 class RandomizedLevel : AppCompatActivity() {
     var count = 0
@@ -46,6 +48,9 @@ class RandomizedLevel : AppCompatActivity() {
         categoryNumber = intent.getSerializableExtra("category") as Int
         mastery = intent.getSerializableExtra("mst") as Int
 
+        intnt.putExtra("mst",mastery)
+        setResult(categoryNumber,intnt)
+
         buttonHint = button3
         buttonConf = button6
         buttonMast = button11
@@ -61,15 +66,18 @@ class RandomizedLevel : AppCompatActivity() {
             exampleList.add(allItems[l])
             l += 1
         }
+        var b = ArrayList<Int>()
         for (x in 1..(count - ((count+1)/2)))
         {
             var a = (0 until countAll).random()
-            while(a < l  && a >= (l - ((count+1)/2))){
+            while((a < l  && a >= (l - ((count+1)/2))) || a in b){
                 a = (0..(countAll-1)).random()
             }
             Log.w("warning","a = $a, l = $l")
             exampleList.add(allItems[a])
+            b.add(a)
         }
+        b.clear()
 
         recycler_view.adapter = RandomizedLevelAdapter(exampleList,this)
         recycler_view.layoutManager = ExLayout(this,count)
@@ -136,7 +144,9 @@ class RandomizedLevel : AppCompatActivity() {
         if(order)
         {
             //todo send completed level count with the difficulty multiplier (count)
-            mastery += count
+            if(mastery < countAll *5){
+                mastery += count
+            }
             val mxd = ((mastery *75)/ (countAll*5))
 
             intnt.putExtra("mst",mastery)
@@ -188,6 +198,22 @@ class RandomizedLevel : AppCompatActivity() {
 
         if(l + 2 > (countAll-1)) //checking if we have any items to show
         {
+            AlertDialog.Builder(this)
+                .setTitle("Thank you!")
+                .setMessage("You have seen all of the items from this category. Do you want to shuffle and continue?") // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        allItems.shuffle()
+                        l = 0
+                        goNextLevel(v)
+                    }) // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton("Go Back", {dialog, which ->
+                        finish()
+                    })
+                .setIcon(R.drawable.ic_assignment_turned_in_black_24dp)
+                .show()
+
             return
         }
 
@@ -197,16 +223,18 @@ class RandomizedLevel : AppCompatActivity() {
             exampleList.add(allItems[l])
             l += 1
         }
+        var b = ArrayList<Int>()
         for (x in 1..(count - ((count+1)/2)))
         {
             var a = (0 until countAll).random()
-            while(a < l  && a >= (l - ((count+1)/2))){
+            while((a < l  && a >= (l - ((count+1)/2))) || a in b){
                 a = (0..(countAll-1)).random()
             }
             Log.w("warning","a = $a, l = $l")
             exampleList.add(allItems[a])
+            b.add(a)
         }
-
+        b.clear()
         /*exampleList.add(allItems[l])
         exampleList.add(allItems[l+1])
         exampleList.add(allItems[l+2])
