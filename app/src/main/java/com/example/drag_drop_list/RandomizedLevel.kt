@@ -15,11 +15,13 @@ import kotlinx.android.synthetic.main.activity_randomized_level.*
 import kotlinx.android.synthetic.main.example_item.*
 import java.util.*
 import kotlin.collections.ArrayList
-
+//todo clean the code
 class RandomizedLevel : AppCompatActivity() {
     var count = 0
     var countAll = 0
     var l = 0
+    var categoryNumber = 0
+    var mastery = 0
     var allItems = ArrayList<ExampleItem>()
     var exampleList = ArrayList<ExampleItem>()
     var exampleListOrdered = ArrayList<ExampleItem>()
@@ -29,20 +31,21 @@ class RandomizedLevel : AppCompatActivity() {
     var buttonMast : Button? = null
     var buttonNext : Button? = null
 
+    val intnt = Intent()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_randomized_level)
         supportActionBar?.hide()
-        //gpg sign try5
+
+        //todo get mastery percentage for showing
         var bundle = this.intent.extras
         allItems= intent.getSerializableExtra("value") as ArrayList<ExampleItem>
         count = intent.getSerializableExtra("count") as Int
+        categoryNumber = intent.getSerializableExtra("category") as Int
+        mastery = intent.getSerializableExtra("mst") as Int
 
-        /*exampleListOrdered.addAll(exampleList)
-        while (exampleListOrdered == exampleList) {
-            exampleList.shuffle()
-        }*/
         buttonHint = button3
         buttonConf = button6
         buttonMast = button11
@@ -67,22 +70,6 @@ class RandomizedLevel : AppCompatActivity() {
             Log.w("warning","a = $a, l = $l")
             exampleList.add(allItems[a])
         }
-
-        /*exampleList.add(allItems[l])
-        exampleList.add(allItems[l+1])
-        exampleList.add(allItems[l+2])
-        var a = (0..(countAll-1)).random()
-        while((a == l) || (a == (l+1)) || (a == (l+2))){
-            a = (0..(countAll-1)).random()
-        }
-        var b = (0..(countAll-1)).random()
-        while((b == l) || (b == (l+1)) || (b == (l+2)) || (b == a)){
-            b = (0..(countAll-1)).random()
-        }
-        exampleList.add(allItems[a])
-        exampleList.add(allItems[b])
-        l = 3*/
-
 
         recycler_view.adapter = RandomizedLevelAdapter(exampleList,this)
         recycler_view.layoutManager = ExLayout(this,count)
@@ -148,20 +135,29 @@ class RandomizedLevel : AppCompatActivity() {
 
         if(order)
         {
-            val intnt = Intent()
-            intnt.putExtra("mst0",2)
-            setResult(25,intnt)
+            //todo send completed level count with the difficulty multiplier (count)
+            mastery += count
+            val mxd = ((mastery *75)/ (countAll*5))
 
-            for(x in 0..4) {
+            intnt.putExtra("mst",mastery)
+            setResult(categoryNumber,intnt)
+
+            for(x in 0 until count) {
                 recycler_view.layoutManager?.findViewByPosition(x)?.setBackgroundColor(Color.rgb(119,235,30))
             }
             buttonMast?.visibility = View.VISIBLE
+            buttonMast?.text = "$mxd %"
             buttonNext?.visibility = View.VISIBLE
             buttonHint?.visibility = View.INVISIBLE
             buttonConf?.visibility = View.INVISIBLE
 
         }
         else {
+            val mxd = ((mastery *75)/ (countAll*5))
+
+            intnt.putExtra("mst",mastery)
+            setResult(categoryNumber,intnt)
+
             for(x in 0..(count-1)){
                 exampleListOrdered.add(exampleList[x])
             }
@@ -178,6 +174,7 @@ class RandomizedLevel : AppCompatActivity() {
             }
 
             buttonMast?.visibility = View.VISIBLE
+            buttonMast?.text = "$mxd %"
             buttonNext?.visibility = View.VISIBLE
             buttonHint?.visibility = View.INVISIBLE
             buttonConf?.visibility = View.INVISIBLE

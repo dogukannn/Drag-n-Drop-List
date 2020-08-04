@@ -9,12 +9,13 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import java.io.Serializable
 
-
+//todo clean the code
 class Categories : AppCompatActivity() {
 
     var list0 = ArrayList<ExampleItem>()
     var categoryItems = ArrayList<ExampleItem>()
     var mst0 = 0
+    var masteries = Array<Int>(10,{i -> 0})
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +23,13 @@ class Categories : AppCompatActivity() {
         supportActionBar?.hide()
 
         //todo mastery system for categories
+        //----------------------------------
+        //can it savable with a array ?
+        //or will pairs be enough? (can check individuals with playing with strings)
 
 
         val settings = applicationContext.getSharedPreferences("MASTERY", 0)
-        mst0 = settings.getInt("mst0", 0)
+        masteries[0] = settings.getInt("mst0", 0)
 
 
         //(1..200).toSet().combinations(3) :: TOO HEAVY TO USE
@@ -47,18 +51,19 @@ class Categories : AppCompatActivity() {
     }
 
     fun toLevel(v:View) {
-        //todo send datas to randomized levels
-        val masteries = applicationContext.getSharedPreferences("MASTERY", 0)
-        val editor = masteries.edit()
-        editor.putInt("mst0",5)
-        editor.apply()
-
-        when(v.tag){
+        var mst = 0
+        var cat = 0
+        Log.w("next","whops")
+        when(v.tag.toString().toInt()){
             0 -> {
                 categoryItems = list0
+                mst = masteries[0]
+                cat = 0
+                Log.w("next","whops0")
             }
             1 -> {
                 categoryItems = list0
+                cat = 1
             }
         }
         val rGroup = findViewById<RadioGroup>(R.id.rgrup)
@@ -71,6 +76,8 @@ class Categories : AppCompatActivity() {
         var bundle = Bundle();
         bundle.putSerializable("count",size);
         bundle.putSerializable("value", list0 as Serializable);
+        bundle.putSerializable("category",cat)
+        bundle.putSerializable("mst",mst)
         intent.putExtras(bundle);
 
         startActivityForResult(intent, 0);
@@ -80,10 +87,29 @@ class Categories : AppCompatActivity() {
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == 25 && requestCode == 0) {
-            mst0 = data?.getIntExtra("mst0", mst0) as Int
+        //todo get mastery data from levels
+        if (requestCode == 0) {
+            when(resultCode){
+                0 -> {
+                    masteries[0] = data?.getIntExtra("mst", masteries[0]) as Int
+                    Log.w("DATATRANSFER","masteries0 ="+ masteries[0])
+                }
+                1 -> {
+
+                }
+            }
+            //mst0 = data?.getIntExtra("mst0", mst0) as Int
             Log.w("intnt","int = $mst0")
         }
+
+        //todo save the mastery data which comes from levels
+        //or save it when we close the app
+        val mastery = applicationContext.getSharedPreferences("MASTERY", 0)
+        val editor = mastery.edit()
+        editor.putInt("mst0",masteries[0])
+        editor.apply()
+
+
 
         super.onActivityResult(requestCode, resultCode, data)
     }
