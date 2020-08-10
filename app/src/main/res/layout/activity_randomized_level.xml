@@ -75,6 +75,7 @@
         android:background="@drawable/squaree"
         android:backgroundTint="#3EE1D9"
         android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="hint"
         android:text="HINT"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
