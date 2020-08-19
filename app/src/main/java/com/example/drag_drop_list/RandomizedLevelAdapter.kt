@@ -45,7 +45,7 @@ class RandomizedLevelAdapter(private val exampleList : List<ExampleItem>, privat
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
         val currentItem = exampleList[position]
 
-        holder.imageView.setImageResource(currentItem.imageResource)
+        //holder.imageView.setImageResource(currentItem.imageResource)
         holder.textView1.text = currentItem.text1
         holder.textView2.text = currentItem.text2
 
@@ -57,7 +57,7 @@ class RandomizedLevelAdapter(private val exampleList : List<ExampleItem>, privat
     override fun getItemCount() = exampleList.size
 
     class ExampleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val imageView : ImageView = itemView.image_view
+        //val imageView : ImageView = itemView.image_view
         val textView1 : TextView = itemView.text_view1
         val textView2 : TextView = itemView.text_view2
     }

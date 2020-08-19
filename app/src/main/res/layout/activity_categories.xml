@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#202020"
+    android:background="@color/colorBackground"
     tools:context=".categories">
 
     <androidx.constraintlayout.widget.Guideline
@@ -110,7 +110,7 @@
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:onClick="toLevel"
         android:tag="0"
         android:text="20th Century"
@@ -125,7 +125,7 @@
         android:id="@+id/button2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:onClick="toLevel"
         android:tag="0"
         android:text="20th Century"
@@ -139,7 +139,7 @@
         android:id="@+id/button7"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:onClick="toLevel"
         android:tag="0"
         android:text="20th Century"
@@ -153,7 +153,7 @@
         android:id="@+id/button4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:tag="1"
         android:text="19th Century"
         android:textColor="@color/colorPrimary"
@@ -166,7 +166,7 @@
         android:id="@+id/button8"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:tag="1"
         android:text="19th Century"
         android:textColor="@color/colorPrimary"
@@ -179,7 +179,7 @@
         android:id="@+id/button9"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:tag="1"
         android:text="19th Century"
         android:textColor="@color/colorPrimary"
@@ -192,7 +192,7 @@
         android:id="@+id/button5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/button_bg_pressable"
         android:text="Random"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/nine"
@@ -240,14 +240,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-
-
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fivexx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+        android:id="@+id/fivexx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

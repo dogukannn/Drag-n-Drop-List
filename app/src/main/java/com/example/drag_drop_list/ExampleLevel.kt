@@ -31,10 +31,10 @@ class ExampleLevel() : AppCompatActivity() {
         }
 
 
-        recycler_view.adapter = ExampleAdapter(exampleList,this)
+        /*recycler_view.adapter = ExampleAdapter(exampleList,this)
         recycler_view.layoutManager = ExLayout(this,5)
         recycler_view.setHasFixedSize(true)
-        itemTouchHelper.attachToRecyclerView(recycler_view)
+        itemTouchHelper.attachToRecyclerView(recycler_view)*/
     }
 
     var simpleCallback = object :

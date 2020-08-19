@@ -1,5 +1,6 @@
 package com.example.drag_drop_list
 
+//import kotlinx.android.synthetic.main.activity_main.recycler_view
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -8,12 +9,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.RadioButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_categories.*
-import kotlinx.android.synthetic.main.activity_main.recycler_view
 import kotlinx.android.synthetic.main.activity_randomized_level.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -155,123 +155,140 @@ class RandomizedLevel : AppCompatActivity() {
         var x2 = exampleList[1].text2.toInt() < exampleList[2].text2.toInt()
         var x3 = exampleList[2].text2.toInt() < exampleList[3].text2.toInt()
         var x4 = exampleList[3].text2.toInt() < exampleList[4].text2.toInt()*/
+        v.postDelayed(Runnable {
+            var order = true
 
-        var order = true
-
-        for (x in 0..(count - 2)) {
-            if (exampleList[x].text2.toInt() < exampleList[x + 1].text2.toInt()) {
-                continue
-            } else {
-                order = false
-            }
-        }
-
-        if (order) {
-            //todo send completed level count with the difficulty multiplier (count)
-            if (mastery < countAll * 5) {
-                mastery += count
-            }
-            if (mastery > countAll * 5) {
-                mastery = countAll * 5
-            }
-            val mxd = ((mastery * 75) / (countAll * 5))
-
-            intnt.putExtra("mst", mastery)
-            setResult(categoryNumber, intnt)
-
-            for (x in 0 until count) {
-                recycler_view.layoutManager?.findViewByPosition(x)
-                    ?.setBackgroundColor(Color.rgb(119, 235, 30))
-            }
-            buttonMast?.visibility = View.VISIBLE
-            buttonMast?.text = "$mxd %"
-            buttonNext?.visibility = View.VISIBLE
-            buttonHint?.visibility = View.INVISIBLE
-            buttonConf?.visibility = View.INVISIBLE
-
-        } else {
-            val mxd = ((mastery * 75) / (countAll * 5))
-
-            intnt.putExtra("mst", mastery)
-            setResult(categoryNumber, intnt)
-
-            exampleListOrdered.clear()
-            for (x in 0..(count - 1)) {
-                exampleListOrdered.add(exampleList[x])
-            }
-            exampleListOrdered.sortBy { it.text2 }
-
-            for (x in 0..(count - 1)) {
-                if (exampleList[x] == exampleListOrdered[x]) {
-                    recycler_view.layoutManager?.findViewByPosition(x)
-                        ?.setBackgroundColor(Color.rgb(119, 235, 30))
-
+            for (x in 0..(count - 2)) {
+                if (exampleList[x].text2.toInt() < exampleList[x + 1].text2.toInt()) {
+                    continue
                 } else {
-                    recycler_view.layoutManager?.findViewByPosition(x)
-                        ?.setBackgroundColor(Color.rgb(240, 98, 22))
+                    order = false
                 }
             }
 
-            buttonMast?.visibility = View.VISIBLE
-            buttonMast?.text = "$mxd %"
-            buttonNext?.visibility = View.VISIBLE
-            buttonHint?.visibility = View.INVISIBLE
-            buttonConf?.visibility = View.INVISIBLE
+            if (order) {
+                //todo send completed level count with the difficulty multiplier (count)
+                if (mastery < countAll * 5) {
+                    mastery += count
+                }
+                if (mastery > countAll * 5) {
+                    mastery = countAll * 5
+                }
+                val mxd = ((mastery * 75) / (countAll * 5))
 
-            exampleListOrdered.clear()
-        }
+                intnt.putExtra("mst", mastery)
+                setResult(categoryNumber, intnt)
+
+                var green = resources.getDrawable(R.drawable.button_bg_green,theme)
+
+                for (x in 0 until count) {
+                    val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
+                    a?.background = green
+                    a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                }
+
+                buttonMast?.visibility = View.VISIBLE
+                buttonMast?.text = "$mxd %"
+                buttonNext?.visibility = View.VISIBLE
+                buttonHint?.visibility = View.INVISIBLE
+                buttonConf?.visibility = View.INVISIBLE
+
+
+            } else {
+                val mxd = ((mastery * 75) / (countAll * 5))
+
+                intnt.putExtra("mst", mastery)
+                setResult(categoryNumber, intnt)
+
+                exampleListOrdered.clear()
+                for (x in 0..(count - 1)) {
+                    exampleListOrdered.add(exampleList[x])
+                }
+                exampleListOrdered.sortBy { it.text2 }
+
+                var green = resources.getDrawable(R.drawable.button_bg_green,theme)
+                var red = resources.getDrawable(R.drawable.button_bg_red,theme)
+
+                for (x in 0..(count - 1)) {
+                    if (exampleList[x] == exampleListOrdered[x]) {
+                        val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
+                        a?.background = green
+                        a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+
+
+                    } else {
+                        val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
+                        a?.background = red
+                        a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                    }
+                }
+
+                buttonMast?.visibility = View.VISIBLE
+                buttonMast?.text = "$mxd %"
+                buttonNext?.visibility = View.VISIBLE
+                buttonHint?.visibility = View.INVISIBLE
+                buttonConf?.visibility = View.INVISIBLE
+
+                exampleListOrdered.clear()
+            }
+        }, 250)
+
 
     }
 
     fun goNextLevel(v: View) {
+        v.postDelayed(Runnable {
+            var term = false
+            if (l + 2 > (countAll - 1)) //checking if we have any items to show
+            {
+                AlertDialog.Builder(this)
+                    .setTitle("Thank you!")
+                    .setMessage("You have seen all of the items from this category. Do you want to shuffle and continue?") // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            allItems.shuffle()
+                            l = 0
+                            hint_limit = (count - 1) / 2
+                            hints.clear()
+                            goNextLevel(v)
+                        }) // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("Go Back", { dialog, which ->
+                        finish()
+                    })
+                    .setIcon(R.drawable.ic_assignment_turned_in_black_24dp)
+                    .show()
+                    term = true
 
-        if (l + 2 > (countAll - 1)) //checking if we have any items to show
-        {
-            AlertDialog.Builder(this)
-                .setTitle("Thank you!")
-                .setMessage("You have seen all of the items from this category. Do you want to shuffle and continue?") // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        allItems.shuffle()
-                        l = 0
-                        hint_limit = (count - 1) / 2
-                        hints.clear()
-                        goNextLevel(v)
-                    }) // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton("Go Back", { dialog, which ->
-                    finish()
-                })
-                .setIcon(R.drawable.ic_assignment_turned_in_black_24dp)
-                .show()
-
-            return
-        }
-        hints.clear()
-        hint_limit = (count - 1) / 2
-        exampleList.clear()
-        for (x in 1..((count + 1) / 2)) {
-            exampleList.add(allItems[l])
-            l += 1
-        }
-        var b = ArrayList<Int>()
-        for (x in 1..(count - ((count + 1) / 2))) {
-            var a = (0 until countAll).random()
-            while ((a < l && a >= (l - ((count + 1) / 2))) || a in b) {
-                a = (0..(countAll - 1)).random()
             }
-            Log.w("warning", "a = $a, l = $l")
-            exampleList.add(allItems[a])
-            b.add(a)
-        }
-        b.clear()
+            if(!term) {
+                hints.clear()
+                hint_limit = (count - 1) / 2
+                exampleList.clear()
+                for (x in 1..((count + 1) / 2)) {
+                    exampleList.add(allItems[l])
+                    l += 1
+                }
+                var b = ArrayList<Int>()
+                for (x in 1..(count - ((count + 1) / 2))) {
+                    var a = (0 until countAll).random()
+                    while ((a < l && a >= (l - ((count + 1) / 2))) || a in b) {
+                        a = (0..(countAll - 1)).random()
+                    }
+                    Log.w("warning", "a = $a, l = $l")
+                    exampleList.add(allItems[a])
+                    b.add(a)
+                }
+                b.clear()
 
-        recycler_view.adapter = RandomizedLevelAdapter(exampleList, act)
-        buttonMast?.visibility = View.INVISIBLE
-        buttonNext?.visibility = View.INVISIBLE
+                recycler_view.adapter = RandomizedLevelAdapter(exampleList, act)
+                buttonMast?.visibility = View.INVISIBLE
+                buttonNext?.visibility = View.INVISIBLE
 
-        buttonHint?.visibility = View.VISIBLE
-        buttonConf?.visibility = View.VISIBLE
+                buttonHint?.visibility = View.VISIBLE
+                buttonConf?.visibility = View.VISIBLE
+            }
+        }, 250)
     }
 
     fun hint(v: View) {
@@ -322,9 +339,10 @@ class RandomizedLevel : AppCompatActivity() {
             recycler_view.adapter?.notifyItemMoved(i - 1, rnd);
         }
 
-
-        recycler_view.layoutManager?.findViewByPosition(rnd)
-            ?.setBackgroundColor(Color.rgb(119, 235, 30))
+        var green = resources.getDrawable(R.drawable.button_bg_green,theme)
+        val a = recycler_view.layoutManager?.findViewByPosition(rnd)?.findViewWithTag<ConstraintLayout>("2")
+        a?.background = green
+        a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
         i = 0
         hint_limit--
     }

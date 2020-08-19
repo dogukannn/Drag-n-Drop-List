@@ -46,9 +46,9 @@ class ExampleAdapter(private val exampleList : List<ExampleItem>, private  var a
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
         val currentItem = exampleList[position]
 
-        holder.imageView.setImageResource(currentItem.imageResource)
+        //holder.imageView.setImageResource(currentItem.imageResource)
         holder.textView1.text = currentItem.text1
-        holder.textView2.text = currentItem.text2
+        //holder.textView2.text = currentItem.text2
 
         //val containerHeight: Int? = mRecyclerView?.height
 
@@ -58,8 +58,8 @@ class ExampleAdapter(private val exampleList : List<ExampleItem>, private  var a
     override fun getItemCount() = exampleList.size
 
     class ExampleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val imageView : ImageView = itemView.image_view
+        //val imageView : ImageView = itemView.image_view
         val textView1 : TextView = itemView.text_view1
-        val textView2 : TextView = itemView.text_view2
+        //val textView2 : TextView = itemView.text_view2
     }
 }
