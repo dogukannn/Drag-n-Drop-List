@@ -1,10 +1,13 @@
 package com.example.drag_drop_list
 
 //import kotlinx.android.synthetic.main.activity_main.recycler_view
+
+
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
+import android.graphics.drawable.TransitionDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,6 +40,8 @@ class RandomizedLevel : AppCompatActivity() {
     var hints = ArrayList<Int>()
     val intnt = Intent()
     var hint_limit = 0
+    var mpp : MediaPlayer = MediaPlayer()
+    var mpn : MediaPlayer = MediaPlayer()
 
 
 
@@ -89,6 +94,9 @@ class RandomizedLevel : AppCompatActivity() {
         recycler_view.layoutManager = ExLayout(this, count)
         recycler_view.setHasFixedSize(true)
         itemTouchHelper.attachToRecyclerView(recycler_view)
+
+        mpp = MediaPlayer.create(applicationContext,R.raw.positive)
+        mpn = MediaPlayer.create(applicationContext,R.raw.negative)
     }
 
     var simpleCallback = object :
@@ -183,8 +191,20 @@ class RandomizedLevel : AppCompatActivity() {
 
                 for (x in 0 until count) {
                     val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
-                    a?.background = green
+                    //a?.background = green
                     a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                    a?.findViewWithTag<TextView>("4")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                    a?.findViewWithTag<TextView>("4")?.visibility = View.VISIBLE
+                    val listz = arrayOf(a?.background,green)
+                    val transitionDrawable = TransitionDrawable(listz)
+                    transitionDrawable.setCrossFadeEnabled(true);
+                    a?.setBackground(transitionDrawable);
+                    transitionDrawable.startTransition(300)
+
+
+                    mpp.start()
+
+
                 }
 
                 buttonMast?.visibility = View.VISIBLE
@@ -195,6 +215,9 @@ class RandomizedLevel : AppCompatActivity() {
 
 
             } else {
+
+                mpn.start()
+
                 val mxd = ((mastery * 75) / (countAll * 5))
 
                 intnt.putExtra("mst", mastery)
@@ -212,14 +235,28 @@ class RandomizedLevel : AppCompatActivity() {
                 for (x in 0..(count - 1)) {
                     if (exampleList[x] == exampleListOrdered[x]) {
                         val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
-                        a?.background = green
+                        //a?.background = green
                         a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                        a?.findViewWithTag<TextView>("4")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                        a?.findViewWithTag<TextView>("4")?.visibility = View.VISIBLE
+                        val listz = arrayOf(a?.background,green)
+                        val transitionDrawable = TransitionDrawable(listz)
+                        transitionDrawable.setCrossFadeEnabled(true);
+                        a?.setBackground(transitionDrawable);
+                        transitionDrawable.startTransition(300)
 
 
                     } else {
                         val a = recycler_view.layoutManager?.findViewByPosition(x)?.findViewWithTag<ConstraintLayout>("2")
-                        a?.background = red
+                        //a?.background = red
                         a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                        a?.findViewWithTag<TextView>("4")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+                        a?.findViewWithTag<TextView>("4")?.visibility = View.VISIBLE
+                        val listz = arrayOf(a?.background,red)
+                        val transitionDrawable = TransitionDrawable(listz)
+                        transitionDrawable.setCrossFadeEnabled(true);
+                        a?.setBackground(transitionDrawable);
+                        transitionDrawable.startTransition(300)
                     }
                 }
 
@@ -241,11 +278,12 @@ class RandomizedLevel : AppCompatActivity() {
             var term = false
             if (l + 2 > (countAll - 1)) //checking if we have any items to show
             {
-                AlertDialog.Builder(this)
+                AlertDialog.Builder(this,R.style.AlertDialogz)
+
                     .setTitle("Thank you!")
                     .setMessage("You have seen all of the items from this category. Do you want to shuffle and continue?") // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.
-                    .setPositiveButton(android.R.string.yes,
+                    .setPositiveButton("OK",
                         DialogInterface.OnClickListener { dialog, which ->
                             allItems.shuffle()
                             l = 0
@@ -293,11 +331,11 @@ class RandomizedLevel : AppCompatActivity() {
 
     fun hint(v: View) {
         if (hint_limit == 0) {
-            AlertDialog.Builder(this)
+            AlertDialog.Builder(this,R.style.AlertDialogz)
                 .setTitle("Ooops!")
                 .setMessage("You have used all of your hints.") // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes,
+                .setPositiveButton("OK",
                     DialogInterface.OnClickListener { dialog, which ->
 
                     }) // A null listener allows the button to dismiss the dialog and take no further action.
@@ -341,8 +379,20 @@ class RandomizedLevel : AppCompatActivity() {
 
         var green = resources.getDrawable(R.drawable.button_bg_green,theme)
         val a = recycler_view.layoutManager?.findViewByPosition(rnd)?.findViewWithTag<ConstraintLayout>("2")
-        a?.background = green
+        //a?.background = green
         a?.findViewWithTag<TextView>("3")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+        a?.findViewWithTag<TextView>("4")?.setTextColor(getResources().getColor(R.color.colorSelectedText,theme))
+        a?.findViewWithTag<TextView>("4")?.visibility = View.VISIBLE
+
+
+        val listz = arrayOf(a?.background,green)
+        val transitionDrawable = TransitionDrawable(listz)
+        transitionDrawable.setCrossFadeEnabled(true);
+        a?.setBackground(transitionDrawable);
+        transitionDrawable.startTransition(400)
+
+
+
         i = 0
         hint_limit--
     }
