@@ -1,4 +1,5 @@
-# Drag-n-Drop-List
-Simple list with drag and drop in adroid.
+# Drag-n-Drop-Chronology
+
+Chronology quiz app created with recycler view.
 
 Created with Kotlin.
