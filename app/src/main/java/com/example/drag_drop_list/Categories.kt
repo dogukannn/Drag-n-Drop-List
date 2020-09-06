@@ -6,14 +6,16 @@ import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_categories.*
 import java.io.Serializable
 
 //todo clean the code
 class Categories : AppCompatActivity() {
 
-    var list0 = ArrayList<ExampleItem>()
-    var categoryItems = ArrayList<ExampleItem>()
+    var list0 = ArrayList<Item>()
+    var categoryItems = ArrayList<Item>()
     var mst0 = 0
     var masteries = Array<Int>(10,{i -> 0})
 
@@ -34,18 +36,21 @@ class Categories : AppCompatActivity() {
         val settings = applicationContext.getSharedPreferences("MASTERY", 0)
         masteries[0] = settings.getInt("mst0", 0)
 
+        val jsonFileString = getJsonDataFromAsset(applicationContext, "19th.json")
+
+        /*val jObject = JSONArray(jsonFileString)
+
+        Log.i("data",ar1.toString())*/
+        //Log.i("comb",(1..100).toSet().combinations(5).toString())
+        Log.w("data", jsonFileString)
+
+        val gson = Gson()
+        val listPersonType = object : TypeToken<ArrayList<Item>>() {}.type
+
+        list0 = gson.fromJson(jsonFileString, listPersonType)
+        list0.forEachIndexed { idx, item -> Log.i("data", "> Item $idx:\n$item") }
 
         //(1..200).toSet().combinations(3) :: TOO HEAVY TO USE
-        list0.add(ExampleItem(R.drawable.ic_android, "Nato kuruldu.", "1949"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Varşova Paktı kuruldu.", "1955"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı.", "1974"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı.", "1989"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı.", "1991"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Nato kuruldu+1.", "1950"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Varşova Paktı kuruldu+1.", "1956"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Türkiye Kıbrıs'a asker çıkarttı+1.", "1975"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Berlin Duvarının yıkıldı+1.", "1990"))
-        list0.add(ExampleItem(R.drawable.ic_android, "Sovyetler Birliği yıkıldı+1.", "1992"))
 
 
 

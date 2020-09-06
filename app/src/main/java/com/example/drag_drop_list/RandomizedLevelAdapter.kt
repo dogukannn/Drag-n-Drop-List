@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.example_item.view.*
 
-class RandomizedLevelAdapter(private val exampleList : List<ExampleItem>, private  var activity: RandomizedLevel) : RecyclerView.Adapter<RandomizedLevelAdapter.ExampleViewHolder>() {
+class RandomizedLevelAdapter(private val exampleList : List<Item>, private  var activity: RandomizedLevel) : RecyclerView.Adapter<RandomizedLevelAdapter.ExampleViewHolder>() {
 
     var mRecyclerView: RecyclerView? = null
 
@@ -46,8 +46,8 @@ class RandomizedLevelAdapter(private val exampleList : List<ExampleItem>, privat
         val currentItem = exampleList[position]
 
         //holder.imageView.setImageResource(currentItem.imageResource)
-        holder.textView1.text = currentItem.text1
-        holder.textView2.text = currentItem.text2
+        holder.textView1.text = currentItem.event
+        holder.textView2.text = currentItem.year.toString()
 
         //val containerHeight: Int? = mRecyclerView?.height
 

@@ -23,15 +23,13 @@ import kotlin.collections.ArrayList
 
 
 //todo clean the code
-class RandomizedLevel : AppCompatActivity() {
-    var maxfund = 0
-    var count = 0
+class RandomizedLevelOld : AppCompatActivity() {
+    /*var count = 0
     var countAll = 0
     var l = 0
     var categoryNumber = 0
     var mastery = 0
     var allItems = ArrayList<Item>()
-    var availableItems = ArrayList<Item>()
     var exampleList = ArrayList<Item>()
     var exampleListOrdered = ArrayList<Item>()
     val act = this
@@ -72,23 +70,11 @@ class RandomizedLevel : AppCompatActivity() {
 
         hint_limit = (count - 1) / 2
 
+        allItems.shuffle()
         countAll = allItems.size
 
 
-        updateAvailableItems()
-
-        val rnd: MutableSet<Int> = mutableSetOf()
-        while (rnd.size < count) { rnd.add((0 until availableItems.size).random()) }
-        val randomList = rnd.toList()
-
-        for(i in 0 until count)
-        {
-            exampleList.add(availableItems[randomList[i]])
-        }
-
-
-
-        /*for (x in 1..((count + 1) / 2)) {
+        for (x in 1..((count + 1) / 2)) {
             exampleList.add(allItems[l])
             l += 1
         }
@@ -103,7 +89,7 @@ class RandomizedLevel : AppCompatActivity() {
             b.add(a)
         }
         b.clear()
-        */
+
         recycler_view.adapter = RandomizedLevelAdapter(exampleList, this)
         recycler_view.layoutManager = ExLayout(this, count)
         recycler_view.setHasFixedSize(true)
@@ -181,7 +167,7 @@ class RandomizedLevel : AppCompatActivity() {
             var order = true
 
             for (x in 0..(count - 2)) {
-                if (exampleList[x].year <= exampleList[x + 1].year) {
+                if (exampleList[x].year < exampleList[x + 1].year) {
                     continue
                 } else {
                     order = false
@@ -196,8 +182,7 @@ class RandomizedLevel : AppCompatActivity() {
                 if (mastery > countAll * 5) {
                     mastery = countAll * 5
                 }
-                val mxd = ((mastery * 100) / (countAll * 5))
-
+                val mxd = ((mastery * 75) / (countAll * 5))
 
                 intnt.putExtra("mst", mastery)
                 setResult(categoryNumber, intnt)
@@ -233,7 +218,7 @@ class RandomizedLevel : AppCompatActivity() {
 
                 mpn.start()
 
-                val mxd = ((mastery * 100) / (countAll * 5))
+                val mxd = ((mastery * 75) / (countAll * 5))
 
                 intnt.putExtra("mst", mastery)
                 setResult(categoryNumber, intnt)
@@ -318,17 +303,7 @@ class RandomizedLevel : AppCompatActivity() {
                 hints.clear()
                 hint_limit = (count - 1) / 2
                 exampleList.clear()
-                updateAvailableItems()
-
-                val rnd: MutableSet<Int> = mutableSetOf()
-                while (rnd.size < count) { rnd.add((0 until availableItems.size).random()) }
-                val randomList = rnd.toList()
-
-                for(i in 0 until count)
-                {
-                    exampleList.add(availableItems[randomList[i]])
-                }
-                /*for (x in 1..((count + 1) / 2)) {
+                for (x in 1..((count + 1) / 2)) {
                     exampleList.add(allItems[l])
                     l += 1
                 }
@@ -342,7 +317,7 @@ class RandomizedLevel : AppCompatActivity() {
                     exampleList.add(allItems[a])
                     b.add(a)
                 }
-                b.clear()*/
+                b.clear()
 
                 recycler_view.adapter = RandomizedLevelAdapter(exampleList, act)
                 buttonMast?.visibility = View.INVISIBLE
@@ -353,27 +328,7 @@ class RandomizedLevel : AppCompatActivity() {
             }
         }, 250)
     }
-    fun updateAvailableItems()
-    {
-        availableItems.clear()
 
-        maxfund = (mastery / (countAll * 5 / 5)) + 1;
-
-
-        for(i in 0..countAll)
-        {
-            if(allItems[i].fundamentalness <= maxfund)
-            {
-                availableItems.add(allItems[i])
-            }
-            else
-            {
-                break
-            }
-        }
-        availableItems.shuffle()
-
-    }
     fun hint(v: View) {
         if (hint_limit == 0) {
             AlertDialog.Builder(this,R.style.AlertDialogz)
@@ -442,7 +397,7 @@ class RandomizedLevel : AppCompatActivity() {
         hint_limit--
     }
 
-
+*/
     }
 
 

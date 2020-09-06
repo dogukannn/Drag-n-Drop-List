@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         //var a = exampleListTrue[0].text2.toInt() < exampleListTrue[1].text2.toInt()
         //Log.i("data","a = $a")
 
-        val i=1
+        /*val i=1
         val jsonFileString = getJsonDataFromAsset(applicationContext, "Kitap$i.json")
 
         /*val jObject = JSONArray(jsonFileString)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val listPersonType = object : TypeToken<List<Item>>() {}.type
 
         var items: List<Item> = gson.fromJson(jsonFileString, listPersonType)
-        items.forEachIndexed { idx, item -> Log.i("data", "> Item $idx:\n$item") }
+        items.forEachIndexed { idx, item -> Log.i("data", "> Item $idx:\n$item") }*/
 
 
 
